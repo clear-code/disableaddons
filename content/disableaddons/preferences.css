@@ -1,0 +1,8 @@
+/* general */
+#addonsMgrGroup,
+/* security */
+#addonInstallBox,
+#addonInstallBox + separator {
+	visibility: collapse !important;
+	-moz-user-focus: ignore !important;
+}

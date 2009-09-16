@@ -1,0 +1,4 @@
+content	disableaddons	jar:chrome/unicharm-custom.jar!/content/disableaddons/
+
+overlay	chrome://browser/content/browser.xul	chrome://disableaddons/content/browser.xul
+overlay	chrome://browser/content/preferences/preferences.xul	chrome://disableaddons/content/preferences.xul
