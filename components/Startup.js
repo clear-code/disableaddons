@@ -2,6 +2,7 @@ const ID = 'disableaddons@clear-code.com';
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
+Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
 
 const kCID  = Components.ID('{1e2fc340-a29f-11de-8a39-0800200c9a66}'); 
 const kID   = '@clear-code.com/disableaddons/startup;1';
