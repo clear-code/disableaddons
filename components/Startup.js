@@ -38,65 +38,25 @@ DisableAddonsStartupService.prototype = {
 	{
 		const Pref = Cc['@mozilla.org/preferences;1']
 				.getService(Ci.nsIPrefBranch)
-		Pref.clearUserPref('extensions.newAddons');
+		try {
+			Pref.clearUserPref('extensions.newAddons');
+		}
+		catch(e) {
+		}
 	},
   
-	QueryInterface : function(aIID) 
-	{
-		if (!aIID.equals(Ci.nsIObserver) &&
-			!aIID.equals(Ci.nsISupports)) {
-			throw Components.results.NS_ERROR_NO_INTERFACE;
-		}
-		return this;
-	}
+	classID : kCID,
+	contractID : kID,
+	classDescription : kNAME,
+	QueryInterface : XPCOMUtils.generateQI([Ci.nsIObserver]),
+	_xpcom_categories : [
+		{ category : 'app-startup', service : true }
+	]
  
 }; 
- 	 
-var gModule = { 
-	registerSelf : function(aCompMgr, aFileSpec, aLocation, aType)
-	{
-		aCompMgr = aCompMgr.QueryInterface(Ci.nsIComponentRegistrar);
-		aCompMgr.registerFactoryLocation(
-			kCID,
-			kNAME,
-			kID,
-			aFileSpec,
-			aLocation,
-			aType
-		);
 
-		var catMgr = Cc['@mozilla.org/categorymanager;1']
-					.getService(Ci.nsICategoryManager);
-		catMgr.addCategoryEntry('app-startup', kNAME, kID, true, true);
-	},
-
-	getClassObject : function(aCompMgr, aCID, aIID)
-	{
-		return this.factory;
-	},
-
-	factory : {
-		QueryInterface : function(aIID)
-		{
-			if (!aIID.equals(Ci.nsISupports) &&
-				!aIID.equals(Ci.nsIFactory)) {
-				throw Components.results.NS_ERROR_NO_INTERFACE;
-			}
-			return this;
-		},
-		createInstance : function(aOuter, aIID)
-		{
-			return new DisableAddonsStartupService();
-		}
-	},
-
-	canUnload : function(aCompMgr)
-	{
-		return true;
-	}
-};
-
-function NSGetModule(aCompMgr, aFileSpec) {
-	return gModule;
+function NSGetModule(aCompMgr, aFileSpec)
+{
+	return XPCOMUtils.generateModule([DisableAddonsStartupService]);
 }
- 
+
