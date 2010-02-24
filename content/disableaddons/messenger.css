@@ -1,0 +1,6 @@
+/* menu bar */
+#addonsManager
+{
+	display: none !important;
+	-moz-user-focus: ignore !important;
+}

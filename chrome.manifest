@@ -2,3 +2,7 @@ content	disableaddons	jar:chrome/disableaddons.jar!/content/disableaddons/
 
 overlay	chrome://browser/content/browser.xul	chrome://disableaddons/content/browser.xul
 overlay	chrome://browser/content/preferences/preferences.xul	chrome://disableaddons/content/preferences.xul
+
+overlay	chrome://messenger/content/messenger.xul	chrome://disableaddons/content/messenger.xul
+overlay	chrome://messenger/content/messageWindow.xul	chrome://disableaddons/content/messenger.xul
+overlay	chrome://messenger/content/preferences/preferences.xul	chrome://disableaddons/content/preferences.xul
