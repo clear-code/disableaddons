@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<script type="application/javascript"><![CDATA[
+
+window.arguments = ['updates-only'];
+
+window.addEventListener('load', function() {
+	window.removeEventListener('load', arguments.callee, false);
+
+	// disable installing addons by drag and drop
+	gExtensionsDNDObserver.onDragEnter = function() {};
+	gExtensionsDNDObserver.onDrop = function() {};
+
+	// force update
+	var update = document.getElementById('cmd_installUpdatesAll');
+	update.doCommand();
+}, false);
+
+]]></script>
+</overlay>
