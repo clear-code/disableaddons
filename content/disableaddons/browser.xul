@@ -4,4 +4,12 @@
 
 <command id="Tools:Addons" disabled="true"/>
 
+<script type="application/javascript"><![CDATA[
+// disable personas web installer
+window.addEventListener('DOMContentLoaded', function() {
+	window.removeEventListener('DOMContentLoaded', arguments.callee, false);
+	LightWeightThemeWebInstaller.handleEvent = function() {};
+}, false);
+]]></script>
+
 </overlay>
