@@ -4,7 +4,7 @@
 
 window.addEventListener('load', function() {
 	window.removeEventListener('load', arguments.callee, false);
-	window.minimize();
+	window.close();
 }, false);
 
 ]]></script>
