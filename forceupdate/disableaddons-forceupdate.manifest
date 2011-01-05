@@ -1,3 +1,4 @@
 content	disableaddons-forceupdate	jar:disableaddons-forceupdate.jar!/content/disableaddons-forceupdate/
 
 overlay	chrome://mozapps/content/extensions/extensions.xul	chrome://disableaddons-forceupdate/content/extensions.xul
+overlay	chrome://mozapps/content/extensions/update.xul	chrome://disableaddons-forceupdate/content/update.xul
