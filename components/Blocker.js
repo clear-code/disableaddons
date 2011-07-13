@@ -57,8 +57,10 @@ AddonManagerBlocker.prototype = {
   },
 
   processBlockedContext: function (aContext) {
-    let win = aContext._contentWindow;
-    win.close();
+    try {
+      let win = aContext._contentWindow;
+      win.close();
+    } catch ([]) {}
 
     // XXX: does not work
     // win.setTimeout(function () {
