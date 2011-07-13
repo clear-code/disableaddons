@@ -11,10 +11,10 @@ const kNAME = "Disable Addons Startup Service";
 const ObserverService = Cc['@mozilla.org/observer-service;1']
 		.getService(Ci.nsIObserverService);
 
-const Application = Cc['@mozilla.org/steel/application;1']
-    .getService(Ci.steelIApplication);
+// const Application = Cc['@mozilla.org/steel/application;1']
+//     .getService(Ci.steelIApplication);
 
-let { console } = Application;
+// let { console } = Application;
 
 if (XPCOMUtils.generateNSGetFactory)
 	var STARTUP_TOPIC = 'profile-after-change'; // for gecko 2.0
@@ -50,9 +50,7 @@ DisableAddonsStartupService.prototype = {
 		this.ensureSilent();
 		try {
 			this.enableBackgroundUpdates();
-		} catch (x) {
-			console.log(x);
-		}
+		} catch (x) {}
 	},
 
 	ensureSilent : function()

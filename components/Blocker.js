@@ -11,12 +11,12 @@ const kNAME = "Disable Addons Addon Manager Blocker";
 const ObserverService = Cc['@mozilla.org/observer-service;1']
   .getService(Ci.nsIObserverService);
 
-const Application = Cc['@mozilla.org/steel/application;1']
-    .getService(Ci.steelIApplication);
+// const Application = Cc['@mozilla.org/steel/application;1']
+//     .getService(Ci.steelIApplication);
 
-let { console } = Application;
+// let { console } = Application;
 
-function dir(obj) console.log(Object.getOwnPropertyNames(obj).join("\n"));
+// function dir(obj) console.log(Object.getOwnPropertyNames(obj).join("\n"));
 
 function AddonManagerBlocker() {}
 
