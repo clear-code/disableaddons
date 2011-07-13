@@ -10,3 +10,6 @@ overlay	chrome://messenger/content/preferences/preferences.xul	chrome://disablea
 component {0d55570e-1de3-4b38-b4f9-01e2ef7afbd1} components/Blocker.js
 contract @clear-code.com/disableaddons/addonmanagerblocker;1 {0d55570e-1de3-4b38-b4f9-01e2ef7afbd1}
 category content-policy AddonManagerBlocker @clear-code.com/disableaddons/addonmanagerblocker;1
+component {1e2fc340-a29f-11de-8a39-0800200c9a66} components/Startup.js
+contract @clear-code.com/disableaddons/startup;1 {1e2fc340-a29f-11de-8a39-0800200c9a66}
+category profile-after-change  DisableAddonsStartupService @clear-code.com/disableaddons/startup;1
