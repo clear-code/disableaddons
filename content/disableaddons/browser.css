@@ -1,5 +1,6 @@
 /* menu bar */
-#menu_openAddons
+#menu_openAddons,
+#helpSafeMode
 {
 	display: none !important;
 	-moz-user-focus: ignore !important;
