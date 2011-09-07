@@ -15,15 +15,16 @@ const Prefs = Cc['@mozilla.org/preferences;1']
 		.getService(Ci.nsIPrefBranch)
 		.QueryInterface(Ci.nsIPrefBranch2);
 
+var WindowWatcher;
+
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
 
 // let { console } = Application;
 
-if (XPCOMUtils.generateNSGetFactory)
-	var STARTUP_TOPIC = 'profile-after-change'; // for gecko 2.0
-else
-	var STARTUP_TOPIC = 'app-startup';
+const STARTUP_TOPIC = XPCOMUtils.generateNSGetFactory ?
+					'profile-after-change' : // for gecko 2.0
+					'app-startup' ;
 
 function DisableAddonsStartupService() { 
 }
@@ -68,6 +69,9 @@ DisableAddonsStartupService.prototype = {
  
 	init : function() 
 	{
+		WindowWatcher = Cc['@mozilla.org/embedcomp/window-watcher;1']
+						.getService(Ci.nsIWindowWatcher);
+
 		this.ensureSilent();
 
 		try {
@@ -110,15 +114,13 @@ DisableAddonsStartupService.prototype = {
 						.createInstance(Ci.nsISupportsArray);
 		params.AppendElement(mode);
 
-		var win = Cc['@mozilla.org/embedcomp/window-watcher;1']
-					.getService(Ci.nsIWindowWatcher)
-					.openWindow(
-						null,
-						'chrome://mozapps/content/extensions/extensions.xul',
-						null,
-						'chrome,all,width=10,height=10,screenX=-100,screenY=-100,titlebar=no',
-						params
-					);
+		var win = WindowWatcher.openWindow(
+				null,
+				'chrome://mozapps/content/extensions/extensions.xul',
+				null,
+				'chrome,all,width=10,height=10,screenX=-100,screenY=-100,titlebar=no',
+				params
+			);
 		if (!win.closed)
 			win.setTimeout(function() {
 				if (!win.closed)
