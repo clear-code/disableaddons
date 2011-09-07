@@ -11,6 +11,10 @@ const kNAME = "Disable Addons Startup Service";
 const ObserverService = Cc['@mozilla.org/observer-service;1']
 		.getService(Ci.nsIObserverService);
 
+const Prefs = Cc['@mozilla.org/preferences;1']
+		.getService(Ci.nsIPrefBranch)
+		.QueryInterface(Ci.nsIPrefBranch2);
+
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
 
@@ -42,15 +46,35 @@ DisableAddonsStartupService.prototype = {
 				}
 				this.init();
 				return;
+
+			case 'nsPref:changed':
+				this.onPrefChange(aData);
+				return;
+		}
+	},
+
+	onPrefChange : function(aPrefName)
+	{
+		switch (aPrefName)
+		{
+			case 'extensions.update.notifyUser':
+				if (Prefs.getBoolPref(aPrefName)) {
+					this.applyUpdates();
+					Prefs.setBoolPref(aPrefName, false);
+				}
+				return;
 		}
 	},
  
 	init : function() 
 	{
 		this.ensureSilent();
+
 		try {
 			this.enableBackgroundUpdates();
 		} catch (x) {}
+
+		Prefs.addObserver('extensions.update.', this, false);
 	},
 
 	ensureSilent : function()
@@ -75,6 +99,31 @@ DisableAddonsStartupService.prototype = {
 					Addon.applyBackgroundUpdates = AddonManager.AUTOUPDATE_ENABLE;
 			});
 		});
+	},
+
+	applyUpdates : function()
+	{
+		var mode = Cc['@mozilla.org/supports-string;1']
+					.createInstance(Ci.nsISupportsString);
+		mode.data = 'updates-only';
+		var params = Cc['@mozilla.org/supports-array;1']
+						.createInstance(Ci.nsISupportsArray);
+		params.AppendElement(mode);
+
+		var win = Cc['@mozilla.org/embedcomp/window-watcher;1']
+					.getService(Ci.nsIWindowWatcher)
+					.openWindow(
+						null,
+						'chrome://mozapps/content/extensions/extensions.xul',
+						null,
+						'chrome,all,width=10,height=10,screenX=-100,screenY=-100,titlebar=no',
+						params
+					);
+		if (!win.closed)
+			win.setTimeout(function() {
+				if (!win.closed)
+					win.close();
+			}, 5 * 60 * 1000);
 	},
 
 	classID : kCID,
