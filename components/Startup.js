@@ -100,7 +100,7 @@ DisableAddonsStartupService.prototype = {
 		AddonManager.getAllAddons(function (aAddonList) {
 			aAddonList.forEach(function (aAddon) {
 				if ("applyBackgroundUpdates" in aAddon)
-					Addon.applyBackgroundUpdates = AddonManager.AUTOUPDATE_ENABLE;
+					aAddon.applyBackgroundUpdates = AddonManager.AUTOUPDATE_ENABLE;
 			});
 		});
 	},
