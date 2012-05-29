@@ -1,12 +1,16 @@
 const ID = 'disableaddons@clear-code.com';
 
+const BLOCKED_URIS = [
+  "about:addons"
+];
+
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
 
 const kCID  = Components.ID('{0d55570e-1de3-4b38-b4f9-01e2ef7afbd1}');
 const kID   = '@clear-code.com/disableaddons/addonmanagerblocker;1';
-const kNAME = "Disable Addons Addon Manager Blocker";
+const kNAME = "DisableAddonsAddonManagerBlocker";
 
 const ObserverService = Cc['@mozilla.org/observer-service;1']
   .getService(Ci.nsIObserverService);
@@ -18,9 +22,9 @@ const ObserverService = Cc['@mozilla.org/observer-service;1']
 
 // function dir(obj) console.log(Object.getOwnPropertyNames(obj).join("\n"));
 
-function AddonManagerBlocker() {}
+function DisableAddonsAddonManagerBlocker() {}
 
-AddonManagerBlocker.prototype = {
+DisableAddonsAddonManagerBlocker.prototype = {
   QueryInterface: function (aIID) {
     if (!aIID.equals(Ci.nsIContentPolicy) &&
         !aIID.equals(Ci.nsISupportsWeakReference) &&
@@ -44,7 +48,7 @@ AddonManagerBlocker.prototype = {
   REJECT_OTHER     : Ci.nsIContentPolicy.REJECT_OTHER,
 
   shouldLoad: function (aContentType, aContentLocation, aRequestOrigin, aContext, aMimeTypeGuess, aExtra) {
-    if (aContentLocation.scheme === "about" && aContentLocation.spec === "about:addons") {
+    if (BLOCKED_URIS.indexOf(aContentLocation.spec) > -1) {
       this.processBlockedContext(aContext);
       return this.REJECT_REQUEST;
     }
@@ -78,6 +82,6 @@ AddonManagerBlocker.prototype = {
 };
 
 if (XPCOMUtils.generateNSGetFactory)
-  var NSGetFactory = XPCOMUtils.generateNSGetFactory([AddonManagerBlocker]);
+  var NSGetFactory = XPCOMUtils.generateNSGetFactory([DisableAddonsAddonManagerBlocker]);
 else
-  var NSGetModule = XPCOMUtils.generateNSGetModule([AddonManagerBlocker]);
+  var NSGetModule = XPCOMUtils.generateNSGetModule([DisableAddonsAddonManagerBlocker]);
