@@ -7,7 +7,7 @@ overlay	chrome://messenger/content/messenger.xul	chrome://disableaddons/content/
 overlay	chrome://messenger/content/messageWindow.xul	chrome://disableaddons/content/messenger.xul
 overlay	chrome://messenger/content/preferences/preferences.xul	chrome://disableaddons/content/preferences.xul
 
-component {0d55570e-1de3-4b38-b4f9-01e2ef7afbd1} components/Blocker.js
+component {0d55570e-1de3-4b38-b4f9-01e2ef7afbd1} components/AddonManagerBlocker.js
 contract @clear-code.com/disableaddons/addonmanagerblocker;1 {0d55570e-1de3-4b38-b4f9-01e2ef7afbd1}
 category content-policy DisableAddonsAddonManagerBlocker @clear-code.com/disableaddons/addonmanagerblocker;1
 
