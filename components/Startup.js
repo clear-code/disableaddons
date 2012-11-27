@@ -72,6 +72,7 @@ DisableAddonsStartupService.prototype = {
 		WindowWatcher = Cc['@mozilla.org/embedcomp/window-watcher;1']
 						.getService(Ci.nsIWindowWatcher);
 
+		this.lockXPInstall();
 		this.ensureSilent();
 
 		try {
@@ -103,6 +104,17 @@ DisableAddonsStartupService.prototype = {
 					aAddon.applyBackgroundUpdates = AddonManager.AUTOUPDATE_ENABLE;
 			});
 		});
+	},
+
+	lockXPInstall : function()
+	{
+		const Pref = Cc['@mozilla.org/preferences;1']
+				.getService(Ci.nsIPrefBranch);
+		try {
+			Pref.lockPref('xpinstall.enabled');
+		}
+		catch(e) {
+		}
 	},
 
 	applyUpdates : function()
