@@ -1,6 +1,9 @@
 /* menu bar */
 #addonsManager,
-#helpSafeMode
+#helpSafeMode,
+/* application menu */
+#appmenu_addons,
+#appmenu_safeMode, #appmenu_safeMode + menuseparator
 {
 	display: none !important;
 	-moz-user-focus: ignore !important;
