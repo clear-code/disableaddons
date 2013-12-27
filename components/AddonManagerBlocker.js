@@ -64,9 +64,19 @@ DisableAddonsAddonManagerBlocker.prototype = {
 
   processBlockedContext: function (aContext) {
     try {
-      let win = aContext._contentWindow;
+      if (aContext instanceof Ci.nsIDOMElement && aContext.localName == 'browser') {
+        aContext.stop();
+        let doc = aContext.ownerDocument;
+        let chrome = doc.defaultView;
+        if (chrome &&
+            chrome.gBrowser &&
+            chrome.gBrowser.selectedBrowser == aContext &&
+            chrome.gBrowser.visibleTabs.length == 1)
+          return;
+      }
+      let win = aContext.contentWindow;
       win.close();
-    } catch ([]) {}
+    } catch (error) {}
 
     // XXX: does not work
     // win.setTimeout(function () {
