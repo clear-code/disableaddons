@@ -48,7 +48,9 @@ DisableAddonsAddonManagerBlocker.prototype = {
   REJECT_OTHER     : Ci.nsIContentPolicy.REJECT_OTHER,
 
   shouldLoad: function (aContentType, aContentLocation, aRequestOrigin, aContext, aMimeTypeGuess, aExtra) {
-    if (BLOCKED_URIS.indexOf(aContentLocation.spec) > -1) {
+    if (BLOCKED_URIS.some(function(aURI) {
+          return aContentLocation.spec.indexOf(aURI) == 0;
+        })) {
       this.processBlockedContext(aContext);
       return this.REJECT_REQUEST;
     }
