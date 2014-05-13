@@ -6,7 +6,9 @@
 #appmenu_safeMode,
 /* menu bar */
 #menu_openAddons,
-#helpSafeMode
+#helpSafeMode,
+/* Australis panel UI */
+#add-ons-button
 {
 	display: none !important;
 	-moz-user-focus: ignore !important;
