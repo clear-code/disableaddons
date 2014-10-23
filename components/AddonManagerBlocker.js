@@ -25,6 +25,13 @@ const ObserverService = Cc['@mozilla.org/observer-service;1']
 
 // function dir(obj) console.log(Object.getOwnPropertyNames(obj).join("\n"));
 
+const BLOCKED_URIS_PATTERN = new RegExp('^(?:' +
+                                          BLOCKED_URIS.map(function(aURI) {
+                                            return aURI.replace(/([\\^\$\*\+\?\.\(\)\|\{\}\[\]])/g, '\\$1');
+                                          }).join('|') +
+                                          ')',
+                                        'i');
+
 function DisableAddonsAddonManagerBlocker() {}
 
 DisableAddonsAddonManagerBlocker.prototype = {
@@ -51,9 +58,7 @@ DisableAddonsAddonManagerBlocker.prototype = {
   REJECT_OTHER     : Ci.nsIContentPolicy.REJECT_OTHER,
 
   shouldLoad: function (aContentType, aContentLocation, aRequestOrigin, aContext, aMimeTypeGuess, aExtra) {
-    if (BLOCKED_URIS.some(function(aURI) {
-          return aContentLocation.spec.indexOf(aURI) == 0;
-        })) {
+    if (BLOCKED_URIS_PATTERN.test(aContentLocation.spec)) {
       this.processBlockedContext(aContext);
       Components.utils.reportError(new Error(ID + ': ' + aContentLocation.spec + ' is blocked!'));
       return this.REJECT_REQUEST;
