@@ -9,7 +9,7 @@ Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
 
 const kCID  = Components.ID('{1e2fc340-a29f-11de-8a39-0800200c9a66}'); 
 const kID   = '@clear-code.com/disableaddons/startup;1';
-const kNAME = "Disable Addons Startup Service";
+const kNAME = 'Disable Addons Startup Service';
 
 const ObserverService = Cc['@mozilla.org/observer-service;1']
 		.getService(Ci.nsIObserverService);
@@ -17,6 +17,12 @@ const ObserverService = Cc['@mozilla.org/observer-service;1']
 const Prefs = Cc['@mozilla.org/preferences;1']
 		.getService(Ci.nsIPrefBranch)
 		.QueryInterface(Ci.nsIPrefBranch2);
+
+const SSS = Cc['@mozilla.org/content/style-sheet-service;1']
+		.getService(Ci.nsIStyleSheetService);
+
+const IOService = Cc['@mozilla.org/network/io-service;1']
+		.getService(Ci.nsIIOService);
 
 var WindowWatcher;
 
@@ -141,6 +147,14 @@ DisableAddonsStartupService.prototype = {
 				if (!win.closed)
 					win.close();
 			}, 5 * 60 * 1000);
+	},
+
+	registerGlobalStyleSheet : function() 
+	{
+		var sheet = IOService.newURI('chrome://disableaddons/content/global.css', null, null);
+		if (!SSS.sheetRegistered(sheet, SSS.USER_SHEET)) {
+			SSS.loadAndRegisterSheet(sheet, SSS.USER_SHEET);
+		}
 	},
 
 	classID : kCID,
