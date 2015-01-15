@@ -3,4 +3,4 @@
 appname=${0##*/}
 appname=${appname%.sh}
 
-./makexpi.sh $appname version=0
+./buildscript/makexpi.sh $appname version=0
