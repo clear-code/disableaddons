@@ -8,6 +8,7 @@
 #menu_openAddons,
 #helpSafeMode,
 /* Australis panel UI */
+#wrapper-add-ons-button, /* For Fx 31 ESR */
 #add-ons-button
 {
 	display: none !important;
