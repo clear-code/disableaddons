@@ -26,6 +26,10 @@ const IOService = Cc['@mozilla.org/network/io-service;1']
 
 var WindowWatcher;
 
+// Firefox
+// const Application = Cc['@mozilla.org/fuel/application;1']
+//     .getService(Ci.fuelIApplication);
+// Thunderbird
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
 
