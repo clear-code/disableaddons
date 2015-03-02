@@ -85,6 +85,7 @@ DisableAddonsStartupService.prototype = {
 		WindowWatcher = Cc['@mozilla.org/embedcomp/window-watcher;1']
 						.getService(Ci.nsIWindowWatcher);
 
+		this.registerGlobalStyleSheet();
 		this.lockXPInstall();
 		this.ensureSilent();
 
