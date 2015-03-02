@@ -91,7 +91,10 @@ DisableAddonsStartupService.prototype = {
 
 		try {
 			this.enableBackgroundUpdates();
-		} catch (x) {}
+		}
+		catch(error) {
+			Components.utils.reportError(error);
+		}
 
 		Prefs.addObserver('extensions.update.', this, false);
 	},
@@ -103,7 +106,8 @@ DisableAddonsStartupService.prototype = {
 		try {
 			Pref.clearUserPref('extensions.newAddons');
 		}
-		catch(e) {
+		catch(error) {
+			Components.utils.reportError(error);
 		}
 	},
 
@@ -127,7 +131,8 @@ DisableAddonsStartupService.prototype = {
 		try {
 			Pref.lockPref('xpinstall.enabled');
 		}
-		catch(e) {
+		catch(error) {
+			Components.utils.reportError(error);
 		}
 	},
 
