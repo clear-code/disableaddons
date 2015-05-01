@@ -97,6 +97,7 @@ DisableAddonsStartupService.prototype = {
 		}
 
 		Prefs.addObserver('extensions.update.', this, false);
+		this.registerGlobalStyleSheet();
 	},
 
 	ensureSilent : function()
