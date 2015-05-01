@@ -7,7 +7,7 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
 
-const kCID  = Components.ID('{1e2fc340-a29f-11de-8a39-0800200c9a66}'); 
+const kCID  = Components.ID('{1e2fc340-a29f-11de-8a39-0800200c9a66}');
 const kID   = '@clear-code.com/disableaddons/startup;1';
 const kNAME = 'Disable Addons Startup Service';
 
@@ -39,12 +39,12 @@ const STARTUP_TOPIC = XPCOMUtils.generateNSGetFactory ?
 					'profile-after-change' : // for gecko 2.0
 					'app-startup' ;
 
-function DisableAddonsStartupService() { 
+function DisableAddonsStartupService() {
 }
 DisableAddonsStartupService.prototype = {
 	listening : false,
 
-	observe : function(aSubject, aTopic, aData) 
+	observe : function(aSubject, aTopic, aData)
 	{
 		switch (aTopic)
 		{
@@ -79,8 +79,8 @@ DisableAddonsStartupService.prototype = {
 				return;
 		}
 	},
- 
-	init : function() 
+
+	init : function()
 	{
 		WindowWatcher = Cc['@mozilla.org/embedcomp/window-watcher;1']
 						.getService(Ci.nsIWindowWatcher);
@@ -160,7 +160,7 @@ DisableAddonsStartupService.prototype = {
 			}, 5 * 60 * 1000);
 	},
 
-	registerGlobalStyleSheet : function() 
+	registerGlobalStyleSheet : function()
 	{
 		var sheet = IOService.newURI('chrome://disableaddons/content/global.css', null, null);
 		if (!SSS.sheetRegistered(sheet, SSS.USER_SHEET)) {
