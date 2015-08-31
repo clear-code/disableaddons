@@ -2,7 +2,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-content	disableaddons	jar:chrome/disableaddons.jar!/content/disableaddons/
+content	disableaddons	content/disableaddons/
 
 overlay	chrome://browser/content/browser.xul	chrome://disableaddons/content/browser.xul
 overlay	chrome://browser/content/preferences/preferences.xul	chrome://disableaddons/content/preferences.xul
