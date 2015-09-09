@@ -23,7 +23,7 @@
     *|menuitem[id="menuitem_uninstallItem"],
     *|menuitem[id="menuitem_debugItem"],
     /* the gear button in the header */
-    *|menuitem[id="header-utils-btn"]
+    *|toolbarbutton[id="header-utils-btn"]
     {
       visibility: collapse !important;
       -moz-user-focus: none !important;
