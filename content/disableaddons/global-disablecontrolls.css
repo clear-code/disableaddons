@@ -10,16 +10,20 @@
   url-prefix("about:addons"),
   url-prefix("chrome://mozapps/content/extensions/extensions.xul")
   {
+    /* buttons in richlistitems */
     *|button.addon-control.debug,
     *|button.addon-control.enable,
     *|button.addon-control.disable,
     *|button.addon-control.remove,
     *|button.addon-control.state,
+    /* context menu items */
     *|menuitem[id="menuitem_enableItem"],
     *|menuitem[id="menuitem_disableItem"],
     *|menuitem[id="menuitem_installItem"],
     *|menuitem[id="menuitem_uninstallItem"],
-    *|menuitem[id="menuitem_debugItem"]
+    *|menuitem[id="menuitem_debugItem"],
+    /* the gear button in the header */
+    *|menuitem[id="header-utils-btn"]
     {
       visibility: collapse !important;
       -moz-user-focus: none !important;
