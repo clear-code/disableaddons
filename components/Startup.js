@@ -162,9 +162,9 @@ DisableAddonsStartupService.prototype = {
 
 	registerGlobalStyleSheet : function()
 	{
-		var sheet = IOService.newURI('chrome://disableaddons/content/global.css', null, null);
-		if (!SSS.sheetRegistered(sheet, SSS.USER_SHEET)) {
-			SSS.loadAndRegisterSheet(sheet, SSS.USER_SHEET);
+		var disableManagerSheet = IOService.newURI('chrome://disableaddons/content/global-disablemanager.css', null, null);
+		if (!SSS.sheetRegistered(disableManagerSheet, SSS.USER_SHEET)) {
+			SSS.loadAndRegisterSheet(disableManagerSheet, SSS.USER_SHEET);
 		}
 	},
 

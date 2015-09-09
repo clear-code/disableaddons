@@ -1,0 +1,68 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+@namespace html url("http://www.w3.org/1999/xhtml");
+@namespace xbl url("http://www.mozilla.org/xbl");
+
+/* common */
+
+@-moz-document
+  url-prefix("about:home"),
+  url-prefix("chrome://browser/content/abouthome/aboutHome.xhtml")
+  {
+    *|*#addons, *|*[id="addons"]
+    {
+      display: none !important;
+      visibility: collapse !important;
+    }
+}
+
+/* Firefox */
+
+@-moz-document
+  url-prefix("chrome://browser/content/browser.xul")
+  {
+    #appmenu_addons,
+    #appmenu_safeMode,
+    /* menu bar */
+    #menu_openAddons,
+    #helpSafeMode,
+    /* Australis panel UI */
+    #wrapper-add-ons-button, /* For Fx 31 ESR */
+    #add-ons-button
+    {
+      display: none !important;
+      -moz-user-focus: ignore !important;
+    }
+}
+
+/* Thunderbird */
+
+@-moz-document
+  url-prefix("chrome://messenger/content/messenger.xul"),
+  url-prefix("chrome://messenger/content/messageWindow.xul")
+  {
+    #addonsManager,
+    #helpSafeMode,
+    /* application menu */
+    #appmenu_addons,
+    #appmenu_safeMode, #appmenu_safeMode + menuseparator
+    {
+      display: none !important;
+      -moz-user-focus: ignore !important;
+    }
+}
+
+@-moz-document
+  url-prefix("chrome://messenger/content/preferences/preferences.xul")
+  {
+    #addonsMgrGroup,
+    /* security */
+    #addonInstallBox,
+    #addonInstallBox + separator {
+      visibility: collapse !important;
+      -moz-user-focus: ignore !important;
+    }
+}
