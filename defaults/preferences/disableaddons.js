@@ -6,18 +6,18 @@ pref("xpinstall.enabled", false);
 pref("extensions.showMismatchUI", false);
 
 //We should keep the blocklist available, because it provides more information not only blocked addons...
-// lockPref("extensions.blocklist.enabled", false);
-// lockPref("extensions.blocklist.detailsURL", "");
-// lockPref("extensions.blocklist.itemURL", "");
-// lockPref("extensions.blocklist.url", "");
+// pref("extensions.blocklist.enabled", false);
+// pref("extensions.blocklist.detailsURL", "");
+// pref("extensions.blocklist.itemURL", "");
+// pref("extensions.blocklist.url", "");
 
-lockPref("extensions.getAddons.get.url", "");
-lockPref("extensions.getAddons.getWithPerformance.url", "");
-lockPref("extensions.getAddons.recommended.url", "");
-lockPref("extensions.getAddons.search.browseURL", "");
-lockPref("extensions.getAddons.search.url", "");
+pref("extensions.getAddons.get.url", "");
+pref("extensions.getAddons.getWithPerformance.url", "");
+pref("extensions.getAddons.recommended.url", "");
+pref("extensions.getAddons.search.browseURL", "");
+pref("extensions.getAddons.search.url", "");
 
 //Because the "share" button is out of control, keep it available.
-// lockPref("extensions.webservice.discoverURL", "");
+// pref("extensions.webservice.discoverURL", "");
 
 pref("extensions.disableaddons@clear-code.com.disable.manager", true);
