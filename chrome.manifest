@@ -6,7 +6,7 @@ content	disableaddons	content/disableaddons/
 
 overlay	chrome://browser/content/browser.xul	chrome://disableaddons/content/browser.xul
 
-#overlay	about:addons	chrome://disableaddons/content/block-dragdrop.xul
+overlay	about:addons	chrome://disableaddons/content/block-dragdrop.xul
 overlay	chrome://mozapps/content/extensions/extensions.xul	chrome://disableaddons/content/block-dragdrop.xul
 
 component {0d55570e-1de3-4b38-b4f9-01e2ef7afbd1} components/AddonManagerBlocker.js
