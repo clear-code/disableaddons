@@ -4,12 +4,19 @@
      file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
-<command id="Tools:Addons" disabled="true"/>
-
 <script type="application/javascript"><![CDATA[
 // disable personas web installer
 window.addEventListener('DOMContentLoaded', function() {
 	window.removeEventListener('DOMContentLoaded', arguments.callee, false);
+
+	const Prefs = Cc['@mozilla.org/preferences;1']
+			.getService(Ci.nsIPrefBranch)
+			.QueryInterface(Ci.nsIPrefBranch2);
+	if (!Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager'))
+		return;
+
+	document.getElementById('Tools:Addons').setAttribute('disabled', true);
+
 	if ('LightWeightThemeWebInstaller' in window)
 		LightWeightThemeWebInstaller.handleEvent = function() {};
 }, false);

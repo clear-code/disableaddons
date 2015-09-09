@@ -18,6 +18,10 @@ const kNAME = "DisableAddonsAddonManagerBlocker";
 const ObserverService = Cc['@mozilla.org/observer-service;1']
   .getService(Ci.nsIObserverService);
 
+const Prefs = Cc['@mozilla.org/preferences;1']
+  .getService(Ci.nsIPrefBranch)
+  .QueryInterface(Ci.nsIPrefBranch2);
+
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
 
@@ -58,7 +62,8 @@ DisableAddonsAddonManagerBlocker.prototype = {
   REJECT_OTHER     : Ci.nsIContentPolicy.REJECT_OTHER,
 
   shouldLoad: function (aContentType, aContentLocation, aRequestOrigin, aContext, aMimeTypeGuess, aExtra) {
-    if (BLOCKED_URIS_PATTERN.test(aContentLocation.spec)) {
+    if (Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
+        BLOCKED_URIS_PATTERN.test(aContentLocation.spec)) {
       this.processBlockedContext(aContext);
       Components.utils.reportError(new Error(ID + ': ' + aContentLocation.spec + ' is blocked!'));
       return this.REJECT_REQUEST;

@@ -14,6 +14,10 @@ const kNAME = "DisableAddonsFeatureConfiguratorBlocker";
 const ObserverService = Cc['@mozilla.org/observer-service;1']
 		.getService(Ci.nsIObserverService);
 
+const Prefs = Cc['@mozilla.org/preferences;1']
+		.getService(Ci.nsIPrefBranch)
+		.QueryInterface(Ci.nsIPrefBranch2);
+
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
 
@@ -53,7 +57,8 @@ DisableAddonsFeatureConfiguratorBlocker.prototype = {
  
 	onChromeDocumentLoaded : function(aWindow) 
 	{
-		if (aWindow.location.href != 'chrome://messenger/content/featureConfigurator.xhtml')
+		if (!Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') ||
+		    aWindow.location.href != 'chrome://messenger/content/featureConfigurator.xhtml')
 			return;
 
 		aWindow.addEventListener('DOMContentLoaded', function() {
