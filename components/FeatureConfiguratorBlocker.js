@@ -58,6 +58,8 @@ DisableAddonsFeatureConfiguratorBlocker.prototype = {
 	onChromeDocumentLoaded : function(aWindow) 
 	{
 		if (!Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') ||
+		    !aWindow ||
+		    !aWindow.location ||
 		    aWindow.location.href != 'chrome://messenger/content/featureConfigurator.xhtml')
 			return;
 
