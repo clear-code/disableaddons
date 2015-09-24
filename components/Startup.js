@@ -64,6 +64,13 @@ DisableAddonsStartupService.prototype = {
 			case 'nsPref:changed':
 				this.onPrefChange(aData);
 				return;
+
+			case 'chrome-document-global-created':
+				// block loading of the addon manager
+				if (Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
+					aSubject.location.href.indexOf('about:addons') == 0)
+					aSubject.location.replace('about:blank');
+				return;
 		}
 	},
 
@@ -98,6 +105,8 @@ DisableAddonsStartupService.prototype = {
 
 		Prefs.addObserver('extensions.update.', this, false);
 		this.registerGlobalStyleSheet();
+
+		ObserverService.addObserver(this, 'chrome-document-global-created', false);
 	},
 
 	ensureSilent : function()
