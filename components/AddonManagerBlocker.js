@@ -4,7 +4,8 @@
 const ID = 'disableaddons@clear-code.com';
 
 const BLOCKED_URIS = [
-  "about:addons"
+  "about:addons",
+  "about:debugging"
 ];
 
 const Cc = Components.classes;
