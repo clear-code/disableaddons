@@ -180,6 +180,10 @@ DisableAddonsStartupService.prototype = {
 		if (!SSS.sheetRegistered(disableControllsSheet, SSS.USER_SHEET)) {
 			SSS.loadAndRegisterSheet(disableControllsSheet, SSS.USER_SHEET);
 		}
+		var disableOptionsSheet = IOService.newURI('chrome://disableaddons/content/global-disableoptions.css', null, null);
+		if (!SSS.sheetRegistered(disableOptionsSheet, SSS.USER_SHEET)) {
+			SSS.loadAndRegisterSheet(disableOptionsSheet, SSS.USER_SHEET);
+		}
 	},
 
 	classID : kCID,
