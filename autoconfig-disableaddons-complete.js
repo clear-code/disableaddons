@@ -11,7 +11,8 @@
   let { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
   Services.obs.addObserver({
     observe(aSubject, aTopic, aData) {
-      if (aSubject.location.href.indexOf('about:addons') == 0)
+      if (aSubject.location.href.indexOf('about:addons') == 0 ||
+          aSubject.location.href.indexOf('about:debugging') == 0)
         aSubject.location.replace('about:blank');
     }
   }, 'chrome-document-global-created', false);
