@@ -7,13 +7,23 @@
   lockPref('extensions.getAddons.recommended.url', '');
   lockPref('extensions.getAddons.search.browseURL', '');
   lockPref('extensions.getAddons.search.url', '');
+
   let { classes: Cc, interfaces: Ci, utils: Cu } = Components;
   let { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
+
   Services.obs.addObserver({
     observe(aSubject, aTopic, aData) {
       if (aSubject.location.href.indexOf('about:addons') == 0 ||
           aSubject.location.href.indexOf('about:debugging') == 0)
         aSubject.location.replace('about:blank');
+
+      if (aSubject.location.href.indexOf('chrome://messenger/content/featureConfigurator.xhtml') == 0)
+        aWindow.addEventListener('DOMContentLoaded', () => {
+          aWindow.FeatureConfigurator.subpages = aWindow.FeatureConfigurator.subpages.filter(aPage => {
+            return aPage != 'compactheader' &&
+                   aPage != 'folderpanecolumns';
+          });
+        }, { once: true });
     }
   }, 'chrome-document-global-created', false);
 
