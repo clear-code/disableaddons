@@ -1,4 +1,12 @@
 {// Disable Addons (complete version), for Firefox 52/Thunderbird 52 and later
+  lockPref('extensions.update.enabled', false);
+  lockPref('xpinstall.enabled', false);
+  lockPref('extensions.showMismatchUI', false);
+  lockPref('extensions.getAddons.get.url', '');
+  lockPref('extensions.getAddons.getWithPerformance.url', '');
+  lockPref('extensions.getAddons.recommended.url', '');
+  lockPref('extensions.getAddons.search.browseURL', '');
+  lockPref('extensions.getAddons.search.url', '');
   let { classes: Cc, interfaces: Ci, utils: Cu } = Components;
   let { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
   Services.obs.addObserver({
