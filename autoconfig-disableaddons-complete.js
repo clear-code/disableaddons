@@ -11,7 +11,7 @@
   let { classes: Cc, interfaces: Ci, utils: Cu } = Components;
   let { Services } = Cu.import('resource://gre/modules/Services.jsm', {});
 
-  Services.obs.addObserver({
+  let blocker = {
     observe(aSubject, aTopic, aData) {
       if (aSubject.location.href.indexOf('about:addons') == 0 ||
           aSubject.location.href.indexOf('about:debugging') == 0)
@@ -25,7 +25,9 @@
           });
         }, { once: true });
     }
-  }, 'chrome-document-global-created', false);
+  };
+  Services.obs.addObserver(blocker, 'chrome-document-global-created', false);
+  Services.obs.addObserver(blocker, 'content-document-global-created', false);
 
   const SSS = Cc['@mozilla.org/content/style-sheet-service;1'].getService(Ci.nsIStyleSheetService);
   Services.obs.addObserver({
