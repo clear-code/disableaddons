@@ -44,6 +44,15 @@
               visibility: collapse !important;
             }
         }
+        @-moz-document
+          url-prefix("chrome://browser/content/preferences/in-content/preferences.xul"),
+          url-prefix("about:preferences") {
+            #warnAddonInstall,
+            #addonExceptions {
+              visibility: collapse !important;
+              -moz-user-focus: ignore !important;
+            }
+        }
 
         /* Firefox */
         @-moz-document
