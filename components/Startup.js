@@ -103,10 +103,8 @@ DisableAddonsStartupService.prototype = {
 
 	ensureSilent : function()
 	{
-		const Pref = Cc['@mozilla.org/preferences;1']
-				.getService(Ci.nsIPrefBranch)
 		try {
-			Pref.clearUserPref('extensions.newAddons');
+			Services.prefs.clearUserPref('extensions.newAddons');
 		}
 		catch(error) {
 			Components.utils.reportError(error);
