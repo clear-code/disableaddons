@@ -12,16 +12,11 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
 
+let { Services } = Components.utils.import('resource://gre/modules/Services.jsm', {});
+
 const kCID  = Components.ID('{0d55570e-1de3-4b38-b4f9-01e2ef7afbd1}');
 const kID   = '@clear-code.com/disableaddons/addonmanagerblocker;1';
 const kNAME = "DisableAddonsAddonManagerBlocker";
-
-const ObserverService = Cc['@mozilla.org/observer-service;1']
-  .getService(Ci.nsIObserverService);
-
-const Prefs = Cc['@mozilla.org/preferences;1']
-  .getService(Ci.nsIPrefBranch)
-  .QueryInterface(Ci.nsIPrefBranch2);
 
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
@@ -49,7 +44,7 @@ DisableAddonsAddonManagerBlocker.prototype = {
   },
 
   shouldLoad: function (aContentType, aContentLocation, aRequestOrigin, aContext, aMimeTypeGuess, aExtra) {
-    if (Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
+    if (Services.prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
         BLOCKED_URIS_PATTERN.test(aContentLocation.spec)) {
       this.processBlockedContext(aContext);
       Components.utils.reportError(new Error(ID + ': ' + aContentLocation.spec + ' is blocked!'));

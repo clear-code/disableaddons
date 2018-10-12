@@ -7,16 +7,11 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm');
 
+let { Services } = Components.utils.import('resource://gre/modules/Services.jsm', {});
+
 const kCID  = Components.ID('{a5126d50-a958-11e1-afa6-0800200c9a66}');
 const kID   = '@clear-code.com/disableaddons/featureconfiguratorblocker;1';
 const kNAME = "DisableAddonsFeatureConfiguratorBlocker";
-
-const ObserverService = Cc['@mozilla.org/observer-service;1']
-		.getService(Ci.nsIObserverService);
-
-const Prefs = Cc['@mozilla.org/preferences;1']
-		.getService(Ci.nsIPrefBranch)
-		.QueryInterface(Ci.nsIPrefBranch2);
 
 // const Application = Cc['@mozilla.org/steel/application;1']
 //     .getService(Ci.steelIApplication);
@@ -38,15 +33,15 @@ DisableAddonsFeatureConfiguratorBlocker.prototype = {
 		{
 			case 'app-startup':
 				this.listening = true;
-				ObserverService.addObserver(this, 'profile-after-change', false);
+				Services.obs.addObserver(this, 'profile-after-change', false);
 				return;
 
 			case 'profile-after-change':
 				if (this.listening) {
-					ObserverService.removeObserver(this, 'profile-after-change');
+					Services.obs.removeObserver(this, 'profile-after-change');
 					this.listening = false;
 				}
-				ObserverService.addObserver(this, 'chrome-document-global-created', false);
+				Services.obs.addObserver(this, 'chrome-document-global-created', false);
 				return;
 
 			case 'chrome-document-global-created':
@@ -57,7 +52,7 @@ DisableAddonsFeatureConfiguratorBlocker.prototype = {
  
 	onChromeDocumentLoaded : function(aWindow) 
 	{
-		if (!Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') ||
+		if (!Services.prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') ||
 		    !aWindow ||
 		    !aWindow.location ||
 		    aWindow.location.href != 'chrome://messenger/content/featureConfigurator.xhtml')
