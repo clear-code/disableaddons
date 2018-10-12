@@ -139,9 +139,10 @@ DisableAddonsStartupService.prototype = {
 		var mode = Cc['@mozilla.org/supports-string;1']
 					.createInstance(Ci.nsISupportsString);
 		mode.data = 'updates-only';
-		var params = Cc['@mozilla.org/supports-array;1']
-						.createInstance(Ci.nsISupportsArray);
-		params.AppendElement(mode);
+		var params = Cc['@mozilla.org/array;1']
+						.createInstance(Ci.nsIMutableArray)
+						.QuerySelector(Ci.nsIArray);
+		params.appendElement(mode);
 
 		var win = WindowWatcher.openWindow(
 				null,
