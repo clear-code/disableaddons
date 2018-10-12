@@ -128,10 +128,8 @@ DisableAddonsStartupService.prototype = {
 
 	lockXPInstall : function()
 	{
-		const Pref = Cc['@mozilla.org/preferences;1']
-				.getService(Ci.nsIPrefBranch);
 		try {
-			Pref.lockPref('xpinstall.enabled');
+			Serices.prefs.lockPref('xpinstall.enabled');
 		}
 		catch(error) {
 			Components.utils.reportError(error);
