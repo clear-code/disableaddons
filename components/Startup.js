@@ -11,18 +11,10 @@ const kCID  = Components.ID('{1e2fc340-a29f-11de-8a39-0800200c9a66}');
 const kID   = '@clear-code.com/disableaddons/startup;1';
 const kNAME = 'Disable Addons Startup Service';
 
-const ObserverService = Cc['@mozilla.org/observer-service;1']
-		.getService(Ci.nsIObserverService);
-
-const Prefs = Cc['@mozilla.org/preferences;1']
-		.getService(Ci.nsIPrefBranch)
-		.QueryInterface(Ci.nsIPrefBranch2);
+let { Services } = Components.utils.import('resource://gre/modules/Services.jsm', {});
 
 const SSS = Cc['@mozilla.org/content/style-sheet-service;1']
 		.getService(Ci.nsIStyleSheetService);
-
-const IOService = Cc['@mozilla.org/network/io-service;1']
-		.getService(Ci.nsIIOService);
 
 var WindowWatcher;
 
@@ -50,12 +42,12 @@ DisableAddonsStartupService.prototype = {
 		{
 			case 'app-startup':
 				this.listening = true;
-				ObserverService.addObserver(this, 'profile-after-change', false);
+				Services.obs.addObserver(this, 'profile-after-change', false);
 				return;
 
 			case 'profile-after-change':
 				if (this.listening) {
-					ObserverService.removeObserver(this, 'profile-after-change');
+					Services.obs.removeObserver(this, 'profile-after-change');
 					this.listening = false;
 				}
 				this.init();
@@ -67,7 +59,7 @@ DisableAddonsStartupService.prototype = {
 
 			case 'chrome-document-global-created':
 				// block loading of the addon manager
-				if (Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
+				if (Services.prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
 					aSubject.location.href.indexOf('about:addons') == 0)
 					aSubject.location.replace('about:blank');
 				return;
@@ -79,9 +71,9 @@ DisableAddonsStartupService.prototype = {
 		switch (aPrefName)
 		{
 			case 'extensions.update.notifyUser':
-				if (Prefs.getBoolPref(aPrefName)) {
+				if (Services.prefs.getBoolPref(aPrefName)) {
 					this.applyUpdates();
-					Prefs.setBoolPref(aPrefName, false);
+					Services.prefs.setBoolPref(aPrefName, false);
 				}
 				return;
 		}
@@ -103,10 +95,10 @@ DisableAddonsStartupService.prototype = {
 			Components.utils.reportError(error);
 		}
 
-		Prefs.addObserver('extensions.update.', this, false);
+		Services.prefs.addObserver('extensions.update.', this, false);
 		this.registerGlobalStyleSheet();
 
-		ObserverService.addObserver(this, 'chrome-document-global-created', false);
+		Services.obs.addObserver(this, 'chrome-document-global-created', false);
 	},
 
 	ensureSilent : function()
@@ -171,16 +163,16 @@ DisableAddonsStartupService.prototype = {
 
 	registerGlobalStyleSheet : function()
 	{
-		var disableManagerSheet = IOService.newURI('chrome://disableaddons/content/global-disablemanager.css', null, null);
-		if (Prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
+		var disableManagerSheet = Services.io.newURI('chrome://disableaddons/content/global-disablemanager.css', null, null);
+		if (Services.prefs.getBoolPref('extensions.disableaddons@clear-code.com.disable.manager') &&
 		    !SSS.sheetRegistered(disableManagerSheet, SSS.USER_SHEET)) {
 			SSS.loadAndRegisterSheet(disableManagerSheet, SSS.USER_SHEET);
 		}
-		var disableControllsSheet = IOService.newURI('chrome://disableaddons/content/global-disablecontrolls.css', null, null);
+		var disableControllsSheet = Services.io.newURI('chrome://disableaddons/content/global-disablecontrolls.css', null, null);
 		if (!SSS.sheetRegistered(disableControllsSheet, SSS.USER_SHEET)) {
 			SSS.loadAndRegisterSheet(disableControllsSheet, SSS.USER_SHEET);
 		}
-		var disableOptionsSheet = IOService.newURI('chrome://disableaddons/content/global-disableoptions.css', null, null);
+		var disableOptionsSheet = Services.io.newURI('chrome://disableaddons/content/global-disableoptions.css', null, null);
 		if (!SSS.sheetRegistered(disableOptionsSheet, SSS.USER_SHEET)) {
 			SSS.loadAndRegisterSheet(disableOptionsSheet, SSS.USER_SHEET);
 		}
