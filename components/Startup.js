@@ -129,7 +129,7 @@ DisableAddonsStartupService.prototype = {
 	lockXPInstall : function()
 	{
 		try {
-			Serices.prefs.lockPref('xpinstall.enabled');
+			Services.prefs.lockPref('xpinstall.enabled');
 		}
 		catch(error) {
 			Components.utils.reportError(error);
